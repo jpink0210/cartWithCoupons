@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+use App\Http\Controllers\AuthController;
+
+
+// Auth Login
+// Route::post('signup', 'AuthController@signup');
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/signup', 'signup')->name('user.signup');
+});
