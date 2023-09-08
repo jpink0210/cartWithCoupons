@@ -38,6 +38,11 @@ class AuthController extends Controller
             'checkouted' => 0
         ]);
 
+        $tokenResult = $user->createToken('Token');
+        $tokenResult->token->save();
+
+        return response(['token' => $tokenResult->accessToken]);
+
 
         // return response('success', 201);
     }

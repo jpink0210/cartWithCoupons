@@ -14,7 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        'App\Model' => 'App\Policies\ModelPolicy'
     ];
 
     /**
@@ -23,7 +23,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        // $this->registerPolicies();
+
         // Passport::routes();
+        // Passport::loadKeysFrom(__DIR__.'/../secrets/oauth');
 
     }
 }
