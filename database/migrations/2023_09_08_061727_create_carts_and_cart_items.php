@@ -24,6 +24,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cart_id');
             $table->foreignId('product_id');
+            $table->integer('price')->comment("商品單價");
+            $table->integer('quantity')->comment("數量");
             $table->foreignId('mart_coupon_id')->nullable()->default(0)->comment("優惠券 id");
             $table->integer('discount_amount')->nullable()->default(0)->comment("單項 - 折扣金額");
             $table->integer('total')->comment("單項 - 總計金額");
