@@ -8,6 +8,9 @@ use App\Models\Cart;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateUser;
 
+use Illuminate\Support\Facades\Auth;
+
+
 /**
  * pa make:controller AuthController
  */
@@ -45,5 +48,35 @@ class AuthController extends Controller
 
 
         // return response('success', 201);
+    }
+
+
+    public function logout(Request $request)
+    {
+        $user = auth()->user();
+        dump($user);
+        $user->token()->revoke();
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+    }
+
+    public function login(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        if (!Auth::attempt($validatedData)) {
+            return response('Unauthorized', 401);
+        }
+        // auth 套件的功能，如果 login 成功，自動把資料帶入 $request 裡面
+        $user = $request->user();
+
+        $tokenResult = $user->createToken('Token');
+        $tokenResult->token->save();
+
+        return response(['token' => $tokenResult->accessToken]);
     }
 }

@@ -25,4 +25,21 @@ use App\Http\Controllers\AuthController;
 
 Route::controller(AuthController::class)->group(function () {
     Route::post('/signup', 'signup')->name('user.signup');
+    Route::post('/login', 'login')->name('user.login');
+    Route::get('/logout', 'logout')->name('user.logout');
+
 });
+
+
+Route::get('member/signup', function () {
+    return view('member.signup');
+})->name('page.signup');
+
+Route::get('member/login', function () {
+    return view('member.login');
+})->name('page.login');
+
+Route::get('member/dashboard', function () {
+    return view('member.dashboard');
+})->name('page.dashboard');
+
