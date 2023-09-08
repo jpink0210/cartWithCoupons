@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('mart_coupons', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->comment('優惠券名稱');
+            $table->string('type')->comment('折扣運算方式, minus or multiply');
+            $table->float('discount')->default(0);
             $table->timestamps();
         });
     }
