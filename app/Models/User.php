@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+/**
+ * composer require laravel/passport
+ * php artisan migrate
+ * php artisan passport:install
+ * 
+ */
 
 class User extends Authenticatable
 {
