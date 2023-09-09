@@ -28,12 +28,16 @@ use App\Http\Controllers\AccountController;
 // Route::post('signup', 'AuthController@signup');
 
 Route::controller(AuthController::class)->group(function () {
+    /**
+     * testSignUp
+     */
     Route::post('/signup', 'signup')->name('user.signup');
     Route::post('/login', 'login')->name('user.login');
 
     Route::get('/logout', 'logout')->name('user.logout');
 
 });
+
 
 
 Route::get('member/signup', function () {
@@ -81,8 +85,13 @@ Route::group(
          */
         Route::put('cart_items/mart_coupon/remove/{id}', [CartItemController::class, 'destroyCoupon'])->name('destroyCoupon');
 
-        
+        /**
+         * testMoneySave
+         */
         Route::put('account/save', [AccountController::class, 'save'])->name('account.save');
+        /**
+         * testMoneyWithdraw
+         */
         Route::put('account/withdraw', [AccountController::class, 'withdraw'])->name('account.withdraw');
 
     }
