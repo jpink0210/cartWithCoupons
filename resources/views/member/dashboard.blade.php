@@ -5,12 +5,17 @@
 <div>
     <a href="/">回首頁</a>
 
-    <h2>這是會員首頁 dashboard</h2>
+    <div>
+        <h2 style="float: left;">會員中心</h2>
+    
+        
+    <button style="margin-left: 200px; margin-top: 20px;" onclick="logout()" class="btn btn-lg btn-success" >登出</button>
 
-    <button onclick="logout()" class="btn btn-lg btn-success">登出</button>
-    <br>
-    <br>
+    </div>
+    <div style="clear:both;"></div>
     <a href="/member/cart">查看購物車</a>
+    <br>
+    <hr>
 
 </div>
 @endsection

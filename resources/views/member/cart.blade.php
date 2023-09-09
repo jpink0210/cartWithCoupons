@@ -5,11 +5,13 @@
 <div>
     <a href="/">回首頁</a>
     <br>
-    <br>
+
+    <h2>會員中心</h2>
     <a href="/member/dashboard">會員首頁</a>
+    <br>
+    <hr>
     
     <h2>會員中心 - 購物車</h2>
-
     總金額：
 
     <?php
