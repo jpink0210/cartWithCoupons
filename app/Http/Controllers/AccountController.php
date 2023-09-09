@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Balance;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -14,7 +15,8 @@ class AccountController extends Controller
     {
         $user = auth()->user();
         $account = $user->accounts()->first();
-        return view('member.dashboard', ['account' => $account]);
+        $balances = $user->balances()->orderBy('updated_at', 'desc')->limit(20)->get();
+        return view('member.dashboard', ['account' => $account, 'balances' => $balances]);
     }
 
     public function save(Request $request)
@@ -31,6 +33,11 @@ class AccountController extends Controller
 
         $user->accounts()->update([
             'deposit' => $account->deposit + $req['amount']
+        ]);
+
+        $user->balances()->create([
+            'trade_amount' => $req['amount'],
+            'deposit' =>  $account->deposit + $req['amount']
         ]);
 
         return response()->json('true');
@@ -56,6 +63,11 @@ class AccountController extends Controller
 
         $user->accounts()->update([
             'deposit' => $account->deposit - $req['amount']
+        ]);
+
+        $user->balances()->create([
+            'trade_amount' => -1 * $req['amount'],
+            'deposit' =>  $account->deposit - $req['amount']
         ]);
 
         return response()->json('true');

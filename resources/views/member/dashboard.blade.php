@@ -45,9 +45,32 @@
             <button onclick="save()" >存入</button>
         </div>
         <div>
-            <input id="moneyWithdraw" type="number" name="amount" placeholder="提款金額" value="500">
+            <input id="moneyWithdraw" type="number" name="amount" placeholder="提款金額" value="2000">
             <button onclick="withdraw()" >提款</button>
         </div>
+    <hr>
+
+        <h3>會員錢包 - 轉帳資訊 (最近 20 筆)</h3>
+        <table border="1">
+            <thead>
+                <tr class="text-nowrap">
+                    <td>用戶 ID</td>
+                    <td>帳號</td>
+                    <td>存款餘額</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach( $balances as $balance )
+
+                    <tr>
+                        <td class="">{{ $balance->trade_amount }}</td>
+                        <td>{{ $balance->deposit }}</td>
+                        <td>{{ $balance->updated_at }}</td>
+                    </tr>
+                @endforeach
+
+            </tbody>
+        </table>
 
 </div>
 @endsection
@@ -100,8 +123,6 @@
         .done(function( resp ) {
             console.log(resp);
             if (resp == 'true') window.location.reload();
-
-
         });
 
     }
