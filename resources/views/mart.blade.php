@@ -3,6 +3,9 @@
 
 @section('content')
 <div>
+<a href="/">回首頁</a>
+<a href="/member/dashboard">回會員中心</a>
+
     <table class="table" style="margin-top:30px;">
     <thead>
         <tr class="text-nowrap">
