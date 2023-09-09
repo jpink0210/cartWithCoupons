@@ -7,6 +7,19 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    public function mycart()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return response(null);
+        }
+        $cart = Cart::with('cartItems')->where('user_id', $user->id)
+        ->where('checkouted', false)
+        ->firstOrCreate(['user_id' => $user->id]);
+
+        return view('member.cart', ['cart' => $cart, 'cartItems' => $cart->cartItems]);
+
+    }
     /**
      * Display a listing of the resource.
      */

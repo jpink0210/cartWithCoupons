@@ -20,6 +20,7 @@ Route::get('/', function () {
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\CartController;
 
 
 // Auth Login
@@ -43,9 +44,6 @@ Route::get('member/login', function () {
 })->name('login');
 
 
-Route::get('member/dashboard', function () {
-    return view('member.dashboard');
-})->middleware(['auth'])->name('page.dashboard');
 
 
 
@@ -54,6 +52,12 @@ Route::group(
     'middleware' => 'auth'
 ],
     function () {
+
+        Route::get('member/dashboard', function () {
+            return view('member.dashboard');
+        })->name('page.dashboard');
+
+        Route::get('member/cart', [CartController::class, 'mycart'])->name('mycart');
 
         Route::get('mart', [ProductController::class, 'mart'])->name('mart');
 
