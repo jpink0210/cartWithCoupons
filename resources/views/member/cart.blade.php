@@ -33,7 +33,7 @@
                   <td>{{ $cartItem->total }} </td>
                   <td>
                     <input id="changeQuans" type="number" placeholder="調整數量(>0)" value="">
-                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">修改數量</button>
+                    <button class="btn btn-warning" onclick="changeNumber({{ $cartItem->id }})">修改數量</button>
                   </td>
                   <td>
                     <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除商品</button>
@@ -63,5 +63,33 @@
 
 <script>
 
+  function changeNumber(cartItemId) {
+
+    const changeQuans = Math.floor(parseInt($('#changeQuans').val()));
+
+    if (changeQuans < 1) {
+     return;
+    }
+    const jwtToken = $.cookie("jwt");
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      },
+      method: "put",
+      url: `/cart_items/${cartItemId}`,
+      data: JSON.stringify({
+        id: cartItemId,
+        quantity: changeQuans
+      })
+    })
+    .done(function( resp ) {
+      console.log(resp);
+
+      window.location.reload();
+
+    });
+  }
 
 </script>

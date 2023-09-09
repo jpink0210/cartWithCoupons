@@ -89,9 +89,19 @@ class CartItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CartItem $cartItem)
+    public function update(Request $request, CartItem $cartItem, $id)
     {
         //
+        $req = $request->all();
+        $item = CartItem::find($id);
+        
+        $item->fill([
+            'quantity' => $req['quantity'],
+            'total' => $req['quantity'] * $item->price
+        ]);
+        $item->save();
+
+        return response()->json($item);
     }
 
     /**

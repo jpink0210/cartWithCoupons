@@ -62,7 +62,8 @@ Route::group(
         Route::get('mart', [ProductController::class, 'mart'])->name('mart');
 
         Route::post('cart_items', [CartItemController::class, 'store'])->name('addCartItem');
+        Route::put('cart_items/{id}', [CartItemController::class, 'update'])->name('changeQuans');
 
-
+        
     }
 );
