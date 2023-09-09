@@ -10,6 +10,16 @@
     
     <h2>會員中心 - 購物車</h2>
 
+    總金額：
+
+    <?php
+      $total = 0;
+      foreach ($cartItems as $cartItem) {
+        $total += $cartItem->total;
+      }
+      echo $total;
+    ?>
+
     <table class="table" style="margin-top:30px;border-collapse:collapse;" border="1">
         <thead>
             <tr class="text-nowrap">
@@ -35,11 +45,15 @@
                     <input id="changeQuans" type="number" placeholder="調整數量(>0)" value="">
                     <button class="btn btn-warning" onclick="changeNumber({{ $cartItem->id }})">修改數量</button>
                   </td>
+                  
                   <td>
-                    <button class="btn btn-warning" onclick="removeItem({{ $cartItem->id }})">刪除商品</button>
+                    <button class="btn btn-warning" onclick="removeCoupon({{ $cartItem->id }})">取消優惠券</button>
                   </td>
                   <td>
-                    <button class="btn btn-warning" onclick="removeCoupon({{ $cartItem->id }})">刪除優惠券</button>
+                    ///
+                  </td>
+                  <td>
+                    <button class="btn btn-warning" onclick="removeItem({{ $cartItem->id }})">刪除商品</button>
                   </td>
               </tr>
               @foreach( $martcoupons as $martcoupon )
