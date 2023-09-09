@@ -13,14 +13,20 @@ class BalanceController extends Controller
     public function index()
     {
         //
+        $user = auth()->user();
+        $balances = $user->balances()->orderBy('updated_at', 'desc')->limit(20)->get();
+
+        return view('member.balance', ['balances' => $balances]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getData()
     {
-        //
+        $user = auth()->user();
+        $balances = $user->balances()->orderBy('updated_at', 'desc')->limit(20)->get();   
+
+        return response()->json([
+            'balances' => $balances
+        ]);
     }
 
     /**

@@ -22,6 +22,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\BalanceController;
 
 
 // Auth Login
@@ -57,6 +58,12 @@ Route::group(
     'middleware' => 'auth'
 ],
     function () {
+
+        Route::get('member/balance', [BalanceController::class, 'index'])->name('balance');
+        /**
+         * testGetData (get balance data)
+         */
+        Route::get('api/balance', [BalanceController::class, 'getData'])->name('getDataBalance');
 
         Route::get('member/dashboard', [AccountController::class, 'index'])->name('page.dashboard');
 
