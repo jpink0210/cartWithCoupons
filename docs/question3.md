@@ -13,7 +13,7 @@
 2. 帳戶存款的 CRUD 功能，至少需要兩張表。
     a. accounts：紀錄使用者帳號、目前存款餘額。
 
-    ![Alt text](image-12.png)
+![Alt text](image-12.png)
 
         web.php
         ```
@@ -29,7 +29,8 @@
 
     b. balances：紀錄使用者存取款紀錄。
 
-        ![Alt text](image-13.png)
+![Alt text](image-13.png)
+
 
         web.php
         ```
