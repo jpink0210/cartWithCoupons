@@ -20,6 +20,7 @@ Route::get('/', function () {
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\AccountController;
 
 

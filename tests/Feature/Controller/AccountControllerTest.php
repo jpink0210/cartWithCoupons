@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Account;
 
 use Laravel\Passport\Passport;
 
@@ -35,10 +36,14 @@ class AccountControllerTest extends TestCase
 
     public function testMoneySave(): void
     {
+        $account = Account::factory()->create(
+            ['user_id' => $this->fakeUser2->id]
+        );
+
         $response = $this->call(
             'PUT',
             'account/save',
-            ['amount' => 500]
+            ['amount' => 500, 'account' => $account]
         );
         $response->assertOk();
         

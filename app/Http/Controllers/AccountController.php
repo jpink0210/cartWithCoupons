@@ -19,7 +19,7 @@ class AccountController extends Controller
         return view('member.dashboard', ['account' => $account, 'balances' => $balances]);
     }
 
-    public function save(Request $request)
+    public function save(Request $request, Account $account)
     {
         //
         $req = $request->all();
