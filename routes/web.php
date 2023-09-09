@@ -66,6 +66,7 @@ Route::group(
         Route::delete('cart_items/{id}', [CartItemController::class, 'destroy'])->name('rmCartItem');
 
         Route::put('cart_items/mart_coupon/{id}', [CartItemController::class, 'updateCoupon'])->name('updateCoupon');
+        Route::put('cart_items/mart_coupon/remove/{id}', [CartItemController::class, 'destroyCoupon'])->name('destroyCoupon');
 
         
     }

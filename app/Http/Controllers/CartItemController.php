@@ -155,4 +155,32 @@ class CartItemController extends Controller
 
         //
     }
+
+    /**
+     * destroyCoupon
+     */
+    public function destroyCoupon(CartItem $cartItem, $id)
+    
+    {
+
+        $item = CartItem::find($id);
+
+        if ($item->mart_coupon_id === 0) {
+            return response()->json('尚未使用優惠券，無法刪除');
+        }
+
+        $item->fill([
+            'total' => $item->quantity * $item->price,
+            'mart_coupon_id' => 0,
+            'discount_amount' => 0
+        ]);
+
+        $item->save();
+
+        return response()->json('remove success');
+
+        //
+    }
+
+    
 }

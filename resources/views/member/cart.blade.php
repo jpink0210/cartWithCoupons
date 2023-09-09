@@ -39,7 +39,7 @@
                     <button class="btn btn-warning" onclick="removeItem({{ $cartItem->id }})">刪除商品</button>
                   </td>
                   <td>
-                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除優惠券</button>
+                    <button class="btn btn-warning" onclick="removeCoupon({{ $cartItem->id }})">刪除優惠券</button>
                   </td>
               </tr>
               @foreach( $martcoupons as $martcoupon )
@@ -90,6 +90,27 @@
 
     });
 
+  }
+
+
+  function removeCoupon(cartItemId) {
+    const jwtToken = $.cookie("jwt");
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      },
+      method: "put",
+      url: `/cart_items/mart_coupon/remove/${cartItemId}`
+    })
+    .done(function( resp ) {
+      console.log(resp);
+
+      window.location.reload();
+
+    });
+    
   }
 
   function removeItem(cartItemId) {
