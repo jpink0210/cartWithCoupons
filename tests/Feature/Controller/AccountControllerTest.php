@@ -30,7 +30,6 @@ class AccountControllerTest extends TestCase
             'email' => 'bbb@gmail.com',
             'password' => 1234567890
         ]);
-
         Passport::actingAs($this->fakeUser2);
     }
 
@@ -46,6 +45,12 @@ class AccountControllerTest extends TestCase
             ['amount' => 500, 'account' => $account]
         );
         $response->assertOk();
-        
+
+        $response = $this->call(
+            'PUT',
+            'account/save',
+            ['amount' => -500, 'account' => $account]
+        );
+        $response->assertOk();
     }
 }

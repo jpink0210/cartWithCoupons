@@ -43,7 +43,7 @@ class AccountController extends Controller
         return response()->json('true');
     }
 
-    public function withdraw(Request $request)
+    public function withdraw(Request $request, Account $account)
     {
         //
         $req = $request->all();
