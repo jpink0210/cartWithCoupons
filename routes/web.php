@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
 
 
 // Auth Login
@@ -44,3 +45,6 @@ Route::get('member/login', function () {
 Route::get('member/dashboard', function () {
     return view('member.dashboard');
 })->middleware(['auth'])->name('page.dashboard');
+
+
+Route::get('mart', [ProductController::class, 'index'])->middleware(['auth'])->name('mart');

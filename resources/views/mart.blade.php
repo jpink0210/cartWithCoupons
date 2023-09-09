@@ -3,18 +3,36 @@
 
 @section('content')
 <div>
-    <a href="/">回首頁</a>
-    <h1>SignUp Page</h1>
-    <p>提示：email不得重複</p>
-    <div>
-        <input id="s1" type="text" name="name" placeholder="姓名" value="王小明">
-        <input id="s2" type="text" name="email" placeholder="email" value="user01@gmail.com">
-        <input id="s3" type="password" name="password" placeholder="password" value="123456">
-        <input id="s4" type="password" name="password_confirmation" placeholder="password" value="123456">
-
-        <button onclick="submit()" class="btn btn-lg btn-success">註冊</button>
-
-    </div>
+    <table class="table" style="margin-top:30px;">
+    <thead>
+        <tr class="text-nowrap">
+        <td>標題</td>
+        <td>內容</td>
+        <td>價格</td>
+        <td>數量</td>
+        <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach( $products as $product )
+        <tr>
+            <td class="">{{ $product->title }}</td>
+            <td>{{ $product->content }}</td>
+            <td style="{{ $product->price < 300 ? 'color:red; font-size:22px' : ''  }}" >{{ $product->price }}</td>
+            <td>
+            <div>{{ $product->quantity }} </div>
+            </td>
+            <td>
+            @auth
+                <button class="btn btn-warning" onclick="addToCart({{ $product->id }}, 1)">加入購物車</button>
+            @else
+                <input class="btn btn-warning" data-toggle="modal" data-target="#loginNotYet" type="button" value="加入購物車">
+            @endauth
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+    </table>
 </div>
 @endsection
 
