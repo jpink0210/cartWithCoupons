@@ -50,6 +50,8 @@ class CartItemController extends Controller
             $result->fill([
               'quantity' => $newCount,
               'total' => $newCount * $whickCartItem->price,
+              'mart_coupon_id' => 0,
+              'discount_amount' => 0
             ]);
             // do something
             $result->save();
@@ -98,7 +100,9 @@ class CartItemController extends Controller
         
         $item->fill([
             'quantity' => $req['quantity'],
-            'total' => $req['quantity'] * $item->price
+            'total' => $req['quantity'] * $item->price,
+            'mart_coupon_id' => 0,
+            'discount_amount' => 0
         ]);
         $item->save();
 
