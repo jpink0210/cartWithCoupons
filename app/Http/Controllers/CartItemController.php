@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\MartCoupon;
 
 class CartItemController extends Controller
 {
@@ -103,6 +104,44 @@ class CartItemController extends Controller
 
         return response()->json($item);
     }
+
+    public function updateCoupon(Request $request, CartItem $cartItem, $id)
+    {
+        $item = CartItem::find($id);
+
+        if ($item['mart_coupon_id'] !== 0) {
+            return response()->json('已經有 coupon, 請先移除才能選取');
+        }
+
+        $req = $request->all();
+        $martCoupon = MartCoupon::find($req['martCouponId']);
+        $item = CartItem::find($id);
+        
+        if ($martCoupon->type === "multiply") {
+            $item->fill([
+                'total' => $item->quantity * ($item->price * $martCoupon->discount),
+                'mart_coupon_id' => $req['martCouponId'],
+                'discount_amount' => $item->quantity * ($item->price * (1 - $martCoupon->discount))
+            ]);
+        } else if ($martCoupon->type === "minus") {
+
+            if ($item->price <= $martCoupon->discount) {
+                return response()->json('商品價格太低，無法使用此折扣券');
+            }
+
+            $item->fill([
+                'total' => $item->quantity * ($item->price - $martCoupon->discount),
+                'mart_coupon_id' => $req['martCouponId'],
+                'discount_amount' => $item->quantity * $martCoupon->discount
+            ]);
+        }
+        
+        $item->save();
+
+        return response()->json('true');
+
+    }
+    
 
     /**
      * Remove the specified resource from storage.

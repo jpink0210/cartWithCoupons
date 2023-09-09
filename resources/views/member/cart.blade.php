@@ -28,7 +28,7 @@
                   <td class="">{{ $cartItem->product->title }}</td>
                   <td >{{ $cartItem->price }}</td>
                   <td>{{ $cartItem->quantity }} </td>
-                  <td>{{ $cartItem->mart_coupon ? $cartItem->mart_coupon->name : '尚未使用優惠券' }} </td>
+                  <td>{{ $cartItem->mart_coupon_id ? $cartItem->mart_coupon_id : '尚未使用優惠券' }} </td>
                   <td>{{ $cartItem->discount_amount }} </td>
                   <td>{{ $cartItem->total }} </td>
                   <td>
@@ -49,8 +49,7 @@
                     {{$martcoupon->name}}
                   </td>
                   <td>
-                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">使用優惠券</button>
-
+                    <button class="btn btn-warning" onclick="useCoupon({{ $martcoupon->id }}, {{ $cartItem->id }}, {{$cartItem->mart_coupon_id}})">使用優惠券</button>
                   </td>
                 </tr>
               @endforeach
@@ -62,6 +61,36 @@
 @endsection
 
 <script>
+
+  function useCoupon(martCouponId, cartItemId, cartItemMartCoupon) {
+
+    if (cartItemMartCoupon !== 0) {
+      alert("已經有使用優惠券，請先取消原本的優惠券。");
+      return;
+    }
+
+    const jwtToken = $.cookie("jwt");
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      },
+      method: "put",
+      url: `/cart_items/mart_coupon/${cartItemId}`,
+      data: JSON.stringify({
+        id: cartItemId,
+        martCouponId: martCouponId
+      })
+    })
+    .done(function( resp ) {
+      console.log(resp);
+
+      window.location.reload();
+
+    });
+
+  }
 
   function removeItem(cartItemId) {
 
