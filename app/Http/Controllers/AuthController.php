@@ -92,7 +92,7 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        if (!Auth::attempt($validatedData)) {
+        if (!Auth::attempt($validatedData) && !Auth::check($validatedData)) {
             return response('Unauthorized', 401);
         }
         // auth 套件的功能，如果 login 成功，自動把資料帶入 $request 裡面
