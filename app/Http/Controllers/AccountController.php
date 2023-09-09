@@ -39,5 +39,25 @@ class AccountController extends Controller
     public function withdraw(Request $request, Account $account)
     {
         //
+        $req = $request->all();
+
+        if ($req['amount'] <= 0) {
+            return response()->json('提款金額必須大於零');
+        }
+
+
+        $user = auth()->user();
+
+        $account = $user->accounts()->first();
+
+        if ($req['amount'] > $account->deposit) {
+            return response()->json('提款金額必須小於存款金額');
+        }
+
+        $user->accounts()->update([
+            'deposit' => $account->deposit - $req['amount']
+        ]);
+
+        return response()->json('true');
     }
 }

@@ -42,7 +42,11 @@
         <h3>會員錢包 - 存/提款功能</h3>
         <div>
             <input id="moneySave" type="number" name="amount" placeholder="存入金額" value="500">
-            <button onclick="save()" >送出</button>
+            <button onclick="save()" >存入</button>
+        </div>
+        <div>
+            <input id="moneyWithdraw" type="number" name="amount" placeholder="提款金額" value="500">
+            <button onclick="withdraw()" >提款</button>
         </div>
 
 </div>
@@ -76,6 +80,7 @@
         const moneySave = parseInt($('#moneySave').val());
 
         if (moneySave < 1) {
+            alert("金額請大於 0 ");
             return;
         }
         const jwtToken = $.cookie("jwt");
@@ -94,8 +99,38 @@
         })
         .done(function( resp ) {
             console.log(resp);
-            window.location.reload();
+            if (resp == 'true') window.location.reload();
 
+
+        });
+
+    }
+
+    function withdraw() {
+
+        const moneyWithdraw = parseInt($('#moneyWithdraw').val());
+
+        if (moneyWithdraw < 1) {
+            alert("金額請大於 0 ");
+            return;
+        }
+        const jwtToken = $.cookie("jwt");
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${jwtToken}`
+            },
+            method: "put",
+            url: `/account/withdraw`,
+            data: JSON.stringify({
+                amount: moneyWithdraw
+            })
+        })
+        .done(function( resp ) {
+            console.log(resp);
+            if (resp == 'true') window.location.reload();
         });
 
     }
