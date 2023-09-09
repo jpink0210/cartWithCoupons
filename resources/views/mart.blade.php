@@ -38,24 +38,31 @@
 
 <script>
 
-    function submit() {
+function addToCart(product_id, quantity) {
+    // https://laravel.com/docs/10.x/csrf#csrf-x-csrf-token
 
-            $.ajax({
-                method: "post",
-                url: `/signup`,
-                data: {
-                    name: $('#s1').val(),
-                    email: $('#s2').val(),
-                    password: $('#s3').val(),
-                    password_confirmation: $('#s4').val()
-                }
-            })
-            .done(function( resp ) {
-                console.log(resp);
-                $.cookie("jwt", resp.token);
+    const jwtToken = $.cookie("jwt");
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      },
+      method: "Post",
+      url: `/cart_items`,
+      data: JSON.stringify({
+        cart_id: JSON.parse( `<?php echo $cart_id; ?>` ),
+        product_id: product_id,
+        quantity: quantity
+      })
+    })
+    .done(function( resp ) {
+      console.log(resp);
+      var name = `${resp.name.slice(0, 9)}${resp.name.length > 10 ? '...' : ''}`;
+      toastr.success( "新增成功 - " + name);
 
-                window.location.assign('/member/dashboard')
-            });
-    }
+    });
+  }
+
 
 </script>

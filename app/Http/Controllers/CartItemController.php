@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\CartItem;
 use Illuminate\Http\Request;
 
+
+use App\Models\Cart;
+use App\Models\Product;
+
 class CartItemController extends Controller
 {
     /**
@@ -29,6 +33,41 @@ class CartItemController extends Controller
     public function store(Request $request)
     {
         //
+        $req = $request->all();
+        $product = Product::find($req['product_id']);
+
+        $cart = Cart::find($req['cart_id']);
+        
+        $whickCartItem = $cart->cartItems()->where('product_id', $product->id)->first();
+
+        $result = [];
+
+        if ($whickCartItem) {
+            $result = CartItem::find($whickCartItem->id);
+
+            $newCount = $whickCartItem->quantity + $req['quantity'];
+            $result->fill([
+              'quantity' => $newCount,
+              'total' => $newCount * $whickCartItem->price,
+            ]);
+            // do something
+            $result->save();
+        } else {
+            $result = $cart->cartItems()->create(
+                [
+                  'product_id' => $product->id,
+                  'price' => $product->price,
+                  'quantity' => $req['quantity'],
+                  'total' => $req['quantity'] * $product->price
+                ]
+            );
+        }
+        return response()->json([
+            'name' => $product->title,
+            'result' => $result
+        ]);
+
+        
     }
 
     /**

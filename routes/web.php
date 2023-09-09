@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartItemController;
 
 
 // Auth Login
@@ -47,4 +48,17 @@ Route::get('member/dashboard', function () {
 })->middleware(['auth'])->name('page.dashboard');
 
 
-Route::get('mart', [ProductController::class, 'index'])->middleware(['auth'])->name('mart');
+
+Route::group(
+    [
+    'middleware' => 'auth'
+],
+    function () {
+
+        Route::get('mart', [ProductController::class, 'mart'])->name('mart');
+
+        Route::post('cart_items', [CartItemController::class, 'store'])->name('addCartItem');
+
+
+    }
+);

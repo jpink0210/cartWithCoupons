@@ -13,6 +13,15 @@ class CartController extends Controller
     public function index()
     {
         //
+        $user = auth()->user();
+        if (!$user) {
+            return response(null);
+        }
+        $cart = Cart::with('cartItems')->where('user_id', $user->id)
+        ->where('checkouted', false)
+        ->firstOrCreate(['user_id' => $user->id]);
+        
+        return response($cart);
     }
 
     /**
