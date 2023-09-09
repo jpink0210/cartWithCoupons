@@ -107,8 +107,13 @@ class CartItemController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CartItem $cartItem)
+    public function destroy(CartItem $cartItem, $id)
+    
     {
+        $item = CartItem::find($id)->delete();
+        
+        return response()->json('remove success');
+
         //
     }
 }

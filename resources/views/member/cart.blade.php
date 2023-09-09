@@ -36,7 +36,7 @@
                     <button class="btn btn-warning" onclick="changeNumber({{ $cartItem->id }})">修改數量</button>
                   </td>
                   <td>
-                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除商品</button>
+                    <button class="btn btn-warning" onclick="removeItem({{ $cartItem->id }})">刪除商品</button>
                   </td>
                   <td>
                     <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除優惠券</button>
@@ -63,6 +63,26 @@
 
 <script>
 
+  function removeItem(cartItemId) {
+
+    const jwtToken = $.cookie("jwt");
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      },
+      method: "delete",
+      url: `/cart_items/${cartItemId}`
+    })
+    .done(function( resp ) {
+      console.log(resp);
+
+      window.location.reload();
+
+    });
+    
+  }
   function changeNumber(cartItemId) {
 
     const changeQuans = Math.floor(parseInt($('#changeQuans').val()));

@@ -63,6 +63,7 @@ Route::group(
 
         Route::post('cart_items', [CartItemController::class, 'store'])->name('addCartItem');
         Route::put('cart_items/{id}', [CartItemController::class, 'update'])->name('changeQuans');
+        Route::delete('cart_items/{id}', [CartItemController::class, 'destroy'])->name('rmCartItem');
 
         
     }
