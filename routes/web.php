@@ -76,6 +76,9 @@ Route::group(
          * testUpdateCoupon
          */
         Route::put('cart_items/mart_coupon/{id}', [CartItemController::class, 'updateCoupon'])->name('updateCoupon');
+        /**
+         * testDestroyCoupon
+         */
         Route::put('cart_items/mart_coupon/remove/{id}', [CartItemController::class, 'destroyCoupon'])->name('destroyCoupon');
 
         

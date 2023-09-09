@@ -101,7 +101,20 @@ class CartItemControllerTest extends TestCase
         $this->assertEquals('1', $cartItem->mart_coupon_id);
 
     }
-    
+
+    public function testDestroyCoupon(): void
+    {
+        $cartItem = CartItem::factory()->create();
+
+        $response = $this->call(
+            'PUT',
+            'cart_items/mart_coupon/remove/'.$cartItem->id,
+            [
+                'id' => $cartItem->id
+            ],
+        );
+        $response->assertOk();
+    }
 
     public function testDestroy(): void
     {
