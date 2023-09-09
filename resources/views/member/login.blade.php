@@ -4,8 +4,7 @@
 @section('content')
 <div>
     <a href="/">回首頁</a>
-    <h1>SignUp Page</h1>
-    <p>提示：email不得重複</p>
+    <h1>Login Page</h1>
     <div>
         <input id="s1" type="text" name="name" placeholder="姓名" value="王小明">
         <input id="s2" type="text" name="email" placeholder="email" value="user01@gmail.com">
@@ -34,7 +33,7 @@
                 console.log(resp);
                 $.cookie("jwt", resp.token);
 
-                window.location.assign('/member/dashboard')
+                window.location.assign('/member/dashboard');
             });
     }
 

@@ -26,6 +26,7 @@ use App\Http\Controllers\AuthController;
 Route::controller(AuthController::class)->group(function () {
     Route::post('/signup', 'signup')->name('user.signup');
     Route::post('/login', 'login')->name('user.login');
+
     Route::get('/logout', 'logout')->name('user.logout');
 
 });
@@ -33,13 +34,13 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::get('member/signup', function () {
     return view('member.signup');
-})->name('page.signup');
+})->name('signup');
 
 Route::get('member/login', function () {
     return view('member.login');
-})->name('page.login');
+})->name('login');
+
 
 Route::get('member/dashboard', function () {
     return view('member.dashboard');
-})->name('page.dashboard');
-
+})->middleware(['auth'])->name('page.dashboard');

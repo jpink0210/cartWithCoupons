@@ -10,7 +10,7 @@ use App\Http\Requests\CreateUser;
 
 use Illuminate\Support\Facades\Auth;
 
-
+use Lcobucci\JWT\Parser as JwtParser;
 /**
  * pa make:controller AuthController
  */
@@ -53,12 +53,36 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $user = auth()->user();
-        $user->token()->revoke();
+        $user = $request->user();
+
+        $value = $request->bearerToken();
         
-        return response()->json([
-            'message' => 'Successfully logged out'
-        ]);
+        if ($value) {
+            /**
+             * https://github.com/laravel/passport/issues/103
+             * 
+             * https://stackoverflow.com/questions/73706249/call-to-a-member-function-revoke-on-null-exception
+             */
+            $token= app(JwtParser::class)->parse($value)->claims()->get('jti');
+            $token= $request->user()->tokens->find($token);
+            $token->revoke();
+            /**
+             * 狀態不匹配
+             * https://laravel.tw/docs/5.1/authentication
+             * 
+             * auth logout not exist
+             * https://stackoverflow.com/questions/57813795/method-illuminate-auth-requestguardlogout-does-not-exist-laravel-passport
+             */
+            Auth::guard('web')->logout();
+
+            return response()->json([
+                'message' => 'Successfully logged out'
+            ]);
+        }
+
+        // $user->token()->revoke();
+
+        
     }
 
     public function login(Request $request)
