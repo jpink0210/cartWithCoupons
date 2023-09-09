@@ -65,6 +65,44 @@ class CartItemControllerTest extends TestCase
         $this->assertEquals(5566, $cartItem->quantity);
     }
 
+    public function testUpdateCoupon(): void
+    {
+        $cartItem = CartItem::factory()->create();
+        $martCoupon = MartCoupon::factory()->create();
+
+        $response = $this->call(
+            'PUT',
+            'cart_items/mart_coupon/'.$cartItem->id,
+            [
+                'id' => $cartItem->id,
+                'martCouponId' => $martCoupon->id
+            ],
+        );
+        $response->assertOk();
+        
+        /**
+         * 如果原本有優惠券，無法更迭
+         * 確認優惠券id, 沒有更動
+         */
+        $cartItem = CartItem::factory()->create([
+            'mart_coupon_id' => 1
+        ]);
+
+        $response = $this->call(
+            'PUT',
+            'cart_items/mart_coupon/'.$cartItem->id,
+            [
+                'id' => $cartItem->id,
+                'martCouponId' => $martCoupon->id
+            ],
+        );
+        $cartItem->refresh();
+
+        $this->assertEquals('1', $cartItem->mart_coupon_id);
+
+    }
+    
+
     public function testDestroy(): void
     {
         $cartItem = CartItem::factory()->create();

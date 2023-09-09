@@ -60,11 +60,21 @@ Route::group(
         Route::get('member/cart', [CartController::class, 'mycart'])->name('mycart');
 
         Route::get('mart', [ProductController::class, 'mart'])->name('mart');
-
+        /**
+         * testStore
+         */
         Route::post('cart_items', [CartItemController::class, 'store'])->name('addCartItem');
+        /**
+         * testUpdate
+         */
         Route::put('cart_items/{id}', [CartItemController::class, 'update'])->name('changeQuans');
+        /**
+         * testDestroy
+         */
         Route::delete('cart_items/{id}', [CartItemController::class, 'destroy'])->name('rmCartItem');
-
+        /**
+         * testUpdateCoupon
+         */
         Route::put('cart_items/mart_coupon/{id}', [CartItemController::class, 'updateCoupon'])->name('updateCoupon');
         Route::put('cart_items/mart_coupon/remove/{id}', [CartItemController::class, 'destroyCoupon'])->name('destroyCoupon');
 
