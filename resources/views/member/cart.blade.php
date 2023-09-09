@@ -24,26 +24,37 @@
         </thead>
         <tbody>
             @foreach( $cartItems as $cartItem )
-            <tr>
-                <td class="">{{ $cartItem->product->title }}</td>
-                <td >{{ $cartItem->price }}</td>
-                <td>{{ $cartItem->quantity }} </td>
-                <td>{{ $cartItem->mart_coupon ? $cartItem->mart_coupon->name : '尚未使用優惠券' }} </td>
-                <td>{{ $cartItem->discount_amount }} </td>
-                <td>{{ $cartItem->total }} </td>
-                <td>
-                  <input id="changeQuans" type="number" placeholder="調整數量(>0)" value="">
-                  <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">修改數量</button>
-                </td>
-                <td>
-                  <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除商品</button>
-                </td>
-            </tr>
-            <tr>
-              <td colspan="8">
-                
-              </td>
-            </tr>
+              <tr>
+                  <td class="">{{ $cartItem->product->title }}</td>
+                  <td >{{ $cartItem->price }}</td>
+                  <td>{{ $cartItem->quantity }} </td>
+                  <td>{{ $cartItem->mart_coupon ? $cartItem->mart_coupon->name : '尚未使用優惠券' }} </td>
+                  <td>{{ $cartItem->discount_amount }} </td>
+                  <td>{{ $cartItem->total }} </td>
+                  <td>
+                    <input id="changeQuans" type="number" placeholder="調整數量(>0)" value="">
+                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">修改數量</button>
+                  </td>
+                  <td>
+                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除商品</button>
+                  </td>
+                  <td>
+                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">刪除優惠券</button>
+                  </td>
+              </tr>
+              @foreach( $martcoupons as $martcoupon )
+                <tr>
+                  
+                  <td colspan="6">
+                    {{$martcoupon->name}}
+                  </td>
+                  <td>
+                    <button class="btn btn-warning" onclick="addToCart({{ $cartItem->id }})">使用優惠券</button>
+
+                  </td>
+                </tr>
+              @endforeach
+              
             @endforeach
         </tbody>
     </table>

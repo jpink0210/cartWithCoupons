@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\MartCoupon;
 use Illuminate\Http\Request;
+
+
 
 class CartController extends Controller
 {
@@ -17,7 +20,13 @@ class CartController extends Controller
         ->where('checkouted', false)
         ->firstOrCreate(['user_id' => $user->id]);
 
-        return view('member.cart', ['cart' => $cart, 'cartItems' => $cart->cartItems]);
+        $martcoupons = MartCoupon::all();
+
+        return view('member.cart', [
+            'cart' => $cart,
+            'cartItems' => $cart->cartItems,
+            'martcoupons' => $martcoupons
+        ]);
 
     }
     /**
