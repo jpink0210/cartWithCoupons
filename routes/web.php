@@ -20,7 +20,7 @@ Route::get('/', function () {
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartItemController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\AccountController;
 
 
 // Auth Login
@@ -53,9 +53,8 @@ Route::group(
 ],
     function () {
 
-        Route::get('member/dashboard', function () {
-            return view('member.dashboard');
-        })->name('page.dashboard');
+        Route::get('member/dashboard', [AccountController::class, 'index'])->name('page.dashboard');
+
 
         Route::get('member/cart', [CartController::class, 'mycart'])->name('mycart');
 
@@ -82,5 +81,8 @@ Route::group(
         Route::put('cart_items/mart_coupon/remove/{id}', [CartItemController::class, 'destroyCoupon'])->name('destroyCoupon');
 
         
+        Route::put('account/save', [AccountController::class, 'save'])->name('account.save');
+        Route::put('account/withdraw', [AccountController::class, 'withdraw'])->name('account.withdraw');
+
     }
 );

@@ -59,4 +59,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cart::class);
     }
+
+    public function accounts()
+    {
+        return $this->hasOne(Account::class);
+    }
+
+    public function balances()
+    {
+        return $this->hasMany(Balance::class);
+    }
 }
